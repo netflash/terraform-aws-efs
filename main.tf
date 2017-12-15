@@ -1,12 +1,21 @@
+#
+# Setup AWS EFS file system
+#
+# https://www.terraform.io/docs/providers/aws/r/efs_file_system.html
+# https://www.terraform.io/docs/providers/aws/r/efs_mount_target.html
+
 # Define composite variables for resources
 module "label" {
-  source     = "git::https://github.com/cloudposse/terraform-null-label.git?ref=tags/0.2.1"
-  namespace  = "${var.namespace}"
-  name       = "${var.name}"
-  stage      = "${var.stage}"
-  delimiter  = "${var.delimiter}"
-  attributes = "${var.attributes}"
-  tags       = "${var.tags}"
+  source        = "devops-workflow/label/local"
+  version       = "0.1.0"
+  organization  = "${var.namespace}"
+  name          = "${var.name}"
+  namespace-env = "${}"
+  namespace-org = "${}"
+  environment   = "${var.stage}"
+  delimiter     = "${var.delimiter}"
+  attributes    = "${var.attributes}"
+  tags          = "${var.tags}"
 }
 
 resource "aws_efs_file_system" "default" {
