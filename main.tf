@@ -5,15 +5,6 @@
 # https://www.terraform.io/docs/providers/aws/r/efs_mount_target.html
 
 # Define composite variables for resources
-data "aws_region" "default" {
-  count   = "${var.enabled ? 1 : 0}"
-  current = "true"
-}
-
-locals {
-  region  = "${length(var.region) > 0 ? var.region : element(concat(data.aws_region.default.*.name, list("")),0)}"
-}
-
 module "label" {
   source        = "devops-workflow/label/local"
   version       = "0.1.0"
@@ -45,7 +36,7 @@ resource "aws_efs_mount_target" "default" {
 resource "aws_security_group" "default" {
   count       = "${var.enabled ? 1 : 0}"
   name        = "${module.label.id}"
-  description = "EFS"
+  description = "EFS Access"
   vpc_id      = "${var.vpc_id}"
   tags        = "${module.label.tags}"
   lifecycle {
@@ -73,13 +64,13 @@ resource "aws_security_group_rule" "egress" {
   security_group_id = "${aws_security_group.default.id}"
 }
 
+# TODO: use alias module instead. This does CNAME
 module "dns" {
   source  = "cloudposse/route53-cluster-hostname/aws"
   version = "0.2.1"
-  name    = "${module.label.id}"
+  name    = "${module.label.name}"
   ttl     = "${var.dns_ttl}"
   zone_id = "${var.zone_id}"
-  #records = ["${aws_efs_file_system.default.id}.efs.${local.region}.amazonaws.com"]
-  records = ["${element(concat(aws_efs_file_system.default.*.id, list("")),0)}.efs.${local.region}.amazonaws.com"]
+  records = ["${element(concat(aws_efs_file_system.default.*.dns_name, list("")),0)}"]
   enabled = "${var.enabled ? (length(var.zone_id) > 0 ? "true" : "false") : "false"}"
 }

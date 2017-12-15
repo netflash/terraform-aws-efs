@@ -1,14 +1,14 @@
 module "efs" {
   source          = "../"
-  name            = "CapMe"
-  environment     = "Dev"
-  #organization    = "CorpXyZ"
+  name            = "efs-vol"
+  environment     = "testing"
+  organization    = ""
   #attributes      = ["role", "policy", "use", ""]
   #tags            = "${map("Key", "Value")}"
-  zone_id         = ""
+  zone_id         = "ZURF67XJUWC5A" # one
   security_groups = []
-  subnets         = []
-  vpc_id          = ""
+  subnets         = ["subnet-857efce3","subnet-0852f140","subnet-6395c038"]
+  vpc_id          = "vpc-417c0027"  # one
   #enabled         = false
 }
 
