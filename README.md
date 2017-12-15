@@ -2,6 +2,7 @@
 
 Terraform module to provision an AWS [`EFS`](https://aws.amazon.com/efs/) Network File System.
 
+### README needs to be updated. Does not currently match module
 
 ## Usage
 
@@ -9,17 +10,15 @@ Include this repository as a module in your existing terraform code:
 
 ```hcl
 module "efs" {
-  source     = "git::https://github.com/cloudposse/terraform-aws-efs.git?ref=master"
-  namespace  = "global"
-  name       = "app"
-  stage      = "prod"
-  attributes = "efs"
+  source        = "devops-workflow/efs/aws"
+  version       = "0.4.0"
+  name          = "app"
+  attributes    = "efs"
 
-  aws_region         = "${var.aws_region}"
-  vpc_id             = "${var.vpc_id}"
-  subnets            = "${var.private_subnets}"
-  availability_zones = ["${var.availability_zones}"]
-  security_groups    = ["${var.security_group_id}"]
+  region            = "${var.aws_region}"
+  vpc_id            = "${var.vpc_id}"
+  subnets           = "${var.private_subnets}"
+  security_groups   = ["${var.security_group_id}"]
 
   zone_id = "${var.aws_route53_dns_zone_id}"
 }
