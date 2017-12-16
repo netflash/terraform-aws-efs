@@ -4,6 +4,12 @@
 # https://www.terraform.io/docs/providers/aws/r/efs_file_system.html
 # https://www.terraform.io/docs/providers/aws/r/efs_mount_target.html
 
+module "enabled" {
+  source  = "devops-workflow/boolean/local"
+  version = "0.1.0"
+  value   = "${var.enabled}"
+}
+
 # Define composite variables for resources
 module "label" {
   source        = "devops-workflow/label/local"
@@ -19,7 +25,7 @@ module "label" {
 }
 
 resource "aws_efs_file_system" "default" {
-  count             = "${var.enabled ? 1 : 0}"
+  count             = "${module.enabled.value}"
   performance_mode  = "${var.performance_mode}"
   encrypted         = "${var.encrypted}"
   kms_key_id        = "${var.kms_key_id}"
@@ -27,14 +33,14 @@ resource "aws_efs_file_system" "default" {
 }
 
 resource "aws_efs_mount_target" "default" {
-  count           = "${var.enabled ? length(compact(var.subnets)) : 0}"
+  count           = "${module.enabled.value ? length(compact(var.subnets)) : 0}"
   file_system_id  = "${aws_efs_file_system.default.id}"
   subnet_id       = "${element(compact(var.subnets), count.index)}"
   security_groups = ["${aws_security_group.default.id}"]
 }
 
 resource "aws_security_group" "default" {
-  count       = "${var.enabled ? 1 : 0}"
+  count       = "${module.enabled.value}"
   name        = "${module.label.id}"
   description = "EFS Access"
   vpc_id      = "${var.vpc_id}"
@@ -45,7 +51,7 @@ resource "aws_security_group" "default" {
 }
 
 resource "aws_security_group_rule" "ingress" {
-  count                    = "${var.enabled ? length(compact(var.security_groups)) : 0}"
+  count                    = "${module.enabled.value ? length(compact(var.security_groups)) : 0}"
   type                     = "ingress"
   from_port                = "2049"
   to_port                  = "2049"
@@ -55,7 +61,7 @@ resource "aws_security_group_rule" "ingress" {
 }
 
 resource "aws_security_group_rule" "egress" {
-  count             = "${var.enabled ? 1 : 0}"
+  count             = "${module.enabled.value}"
   type              = "egress"
   from_port         = 0
   to_port           = 0
@@ -72,5 +78,5 @@ module "dns" {
   ttl     = "${var.dns_ttl}"
   zone_id = "${var.zone_id}"
   records = ["${element(concat(aws_efs_file_system.default.*.dns_name, list("")),0)}"]
-  enabled = "${var.enabled ? (length(var.zone_id) > 0 ? "true" : "false") : "false"}"
+  enabled = "${module.enabled.value ? (length(var.zone_id) > 0 ? "true" : "false") : "false"}"
 }
