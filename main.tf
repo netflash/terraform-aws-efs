@@ -25,11 +25,11 @@ module "label" {
 }
 
 resource "aws_efs_file_system" "default" {
-  count             = "${module.enabled.value}"
-  performance_mode  = "${var.performance_mode}"
-  encrypted         = "${var.encrypted}"
-  kms_key_id        = "${var.kms_key_id}"
-  tags              = "${module.label.tags}"
+  count            = "${module.enabled.value}"
+  performance_mode = "${var.performance_mode}"
+  encrypted        = "${var.encrypted}"
+  kms_key_id       = "${var.kms_key_id}"
+  tags             = "${module.label.tags}"
 }
 
 resource "aws_efs_mount_target" "default" {
@@ -45,6 +45,7 @@ resource "aws_security_group" "default" {
   description = "EFS Access"
   vpc_id      = "${var.vpc_id}"
   tags        = "${module.label.tags}"
+
   lifecycle {
     create_before_destroy = true
   }

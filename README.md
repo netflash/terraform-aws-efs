@@ -1,3 +1,5 @@
+[![CircleCI](https://circleci.com/gh/devops-workflow/terraform-aws-efs.svg?style=svg)](https://circleci.com/gh/devops-workflow/terraform-aws-efs)
+
 # terraform-aws-efs
 
 Terraform module to provision an AWS [`EFS`](https://aws.amazon.com/efs/) Network File System.
