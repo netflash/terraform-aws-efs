@@ -60,7 +60,7 @@ jobs:
               #terraform init -input=false
               echo "Running tflint..."
               /usr/local/tflint/bin/tflint --version
-              /usr/local/tflint/bin/tflint
+              /usr/local/tflint/bin/tflint --debug
 
 workflows:
   version: 2
