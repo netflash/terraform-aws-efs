@@ -95,6 +95,7 @@ variable "region" {
 variable "security_groups" {
   description = "AWS security group IDs to allow to connect to the EFS"
   type        = "list"
+  default     = []
 }
 
 variable "subnets" {
