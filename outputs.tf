@@ -1,6 +1,6 @@
 // EFS File System outputs
 output "dns_name" {
-  description = ""
+  description = "FQDN of the EFS volume"
   value       = "${element(concat(aws_efs_file_system.default.*.dns_name, list("")),0)}"
 }
 
@@ -12,6 +12,11 @@ output "id" {
 output "kms_key_id" {
   description = ""
   value       = "${element(concat(aws_efs_file_system.default.*.kms_key_id, list("")),0)}"
+}
+
+output "name" {
+  description = "Service name that was passed in. This is to make creating mount points easier"
+  value       = "${module.label.name}"
 }
 
 // EFS Mount Target outputs

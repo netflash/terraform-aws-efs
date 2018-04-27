@@ -61,6 +61,16 @@ resource "aws_security_group_rule" "ingress" {
   security_group_id        = "${aws_security_group.default.id}"
 }
 
+resource "aws_security_group_rule" "ingress_cidr" {
+  count             = "${module.enabled.value && length(compact(var.ingress_cidr)) > 0 ? 1 : 0}"
+  type              = "ingress"
+  from_port         = "2049"
+  to_port           = "2049"
+  protocol          = "tcp"
+  cidr_blocks       = ["${var.ingress_cidr}"]
+  security_group_id = "${aws_security_group.default.id}"
+}
+
 resource "aws_security_group_rule" "egress" {
   count             = "${module.enabled.value}"
   type              = "egress"

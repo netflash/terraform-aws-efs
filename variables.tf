@@ -68,6 +68,12 @@ variable "encrypted" {
   default     = "false"
 }
 
+variable "ingress_cidr" {
+  description = "List of CIDR to allow access to EFS"
+  type        = "list"
+  default     = []
+}
+
 variable "kms_key_id" {
   description = "ARN for the KMS encryption key. When specifying kms_key_id, encrypted needs to be set to true"
   type        = "string"
@@ -89,6 +95,7 @@ variable "region" {
 variable "security_groups" {
   description = "AWS security group IDs to allow to connect to the EFS"
   type        = "list"
+  default     = []
 }
 
 variable "subnets" {
