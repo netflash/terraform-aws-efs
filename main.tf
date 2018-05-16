@@ -13,15 +13,21 @@ module "enabled" {
 # Define composite variables for resources
 module "label" {
   source        = "devops-workflow/label/local"
-  version       = "0.1.0"
-  organization  = "${var.organization}"
+  version       = "0.2.0"
+  attributes    = "${var.attributes}"
+  component     = "${var.component}"
+  delimiter     = "${var.delimiter}"
+  environment   = "${var.environment}"
+  monitor       = "${var.monitor}"
   name          = "${var.name}"
   namespace-env = "${var.namespace-env}"
   namespace-org = "${var.namespace-org}"
-  environment   = "${var.environment}"
-  delimiter     = "${var.delimiter}"
-  attributes    = "${var.attributes}"
+  organization  = "${var.organization}"
+  owner         = "${var.owner}"
+  product       = "${var.product}"
+  service       = "${var.service}"
   tags          = "${var.tags}"
+  team          = "${var.team}"
 }
 
 resource "aws_efs_file_system" "default" {
