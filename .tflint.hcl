@@ -5,6 +5,5 @@ ignore_module = {
 "cloudposse/route53-cluster-hostname/aws" = true
 "devops-workflow/boolean/local" = true
 "devops-workflow/label/local" = true
-"../../" = true
 }
 }
