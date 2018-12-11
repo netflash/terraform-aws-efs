@@ -6,7 +6,7 @@
 Terraform module to provision an AWS [`EFS`](https://aws.amazon.com/efs/)
 Network File System.
 
-### README needs to be updated. Does not currently match module
+## README needs to be updated. Does not currently match module
 
 ## Usage
 
@@ -44,7 +44,6 @@ module "efs" {
 | attributes         | `[]`           | Additional attributes (e.g. `policy` or `role`)                  |
 | tags               | `{}`           | Additional tags  (e.g. `map("BusinessUnit","XYZ")`               |
 | delimiter          | `-`            | Delimiter to be used between `name`, `namespace`, `stage`, etc.  |
-
 
 ## Output
 
