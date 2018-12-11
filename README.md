@@ -1,8 +1,10 @@
-[![CircleCI](https://circleci.com/gh/devops-workflow/terraform-aws-efs.svg?style=svg)](https://circleci.com/gh/devops-workflow/terraform-aws-efs)
-
 # terraform-aws-efs
 
-Terraform module to provision an AWS [`EFS`](https://aws.amazon.com/efs/) Network File System.
+[![CircleCI](https://circleci.com/gh/devops-workflow/terraform-aws-efs.svg?style=svg)](https://circleci.com/gh/devops-workflow/terraform-aws-efs)
+[![Github release](https://img.shields.io/github/release/devops-workflow/terraform-aws-efs.svg)](https://github.com/devops-workflow/terraform-aws-efs/releases)
+
+Terraform module to provision an AWS [`EFS`](https://aws.amazon.com/efs/)
+Network File System.
 
 ### README needs to be updated. Does not currently match module
 
@@ -53,3 +55,14 @@ module "efs" {
 | security_group   | The generated EFS security group                                 |
 | mount_target_ids | List of IDs of the EFS mount targets (one per Availability Zone) |
 | mount_target_ips | List of IPs of the EFS mount targets (one per Availability Zone) |
+
+<!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
+
+<!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
+
+<!-- BEGINNING OF PRE-COMMIT-TERRAFORM GRAPH HOOK -->
+
+### Resource Graph of plan
+
+![Terraform Graph](resource-plan-graph.png)
+<!-- END OF PRE-COMMIT-TERRAFORM GRAPH HOOK -->
