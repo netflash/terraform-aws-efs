@@ -95,6 +95,6 @@ module "dns" {
   ttl       = var.dns_ttl
   zone_id   = var.zone_id
   records   = [element(concat(aws_efs_file_system.default.*.dns_name, [""]), 0)]
-  enabled   = module.enabled.value ? length(var.zone_id) > 0 ? "true" : "false" : "false"
+  enabled   = module.enabled.value == "1" ? length(var.zone_id) > 0 ? "true" : "false" : "false"
 }
 
