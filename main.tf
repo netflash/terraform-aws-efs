@@ -37,7 +37,7 @@ resource "aws_efs_file_system" "default" {
 }
 
 resource "aws_efs_mount_target" "default" {
-  count           = module.enabled.value ? length(compact(var.subnets)) : 0
+  count           = module.enabled.value == 1 ? length(compact(var.subnets)) : 0
   file_system_id  = aws_efs_file_system.default[0].id
   subnet_id       = element(compact(var.subnets), count.index)
   security_groups = [aws_security_group.default[0].id]
@@ -56,7 +56,7 @@ resource "aws_security_group" "default" {
 }
 
 resource "aws_security_group_rule" "ingress" {
-  count                    = module.enabled.value ? length(compact(var.security_groups)) : 0
+  count                    = module.enabled.value == 1 ? length(compact(var.security_groups)) : 0
   type                     = "ingress"
   from_port                = "2049"
   to_port                  = "2049"
