@@ -87,13 +87,12 @@ resource "aws_security_group_rule" "egress" {
 
 # TODO: use alias module instead. This does CNAME
 module "dns" {
-  source    = "github.com/stefansedich/terraform-aws-route53-cluster-hostname"
-  namespace = "cp"
-  stage     = "cp"
-  name      = module.label.name
-  ttl       = var.dns_ttl
-  zone_id   = var.zone_id
-  records   = [element(concat(aws_efs_file_system.default.*.dns_name, [""]), 0)]
-  enabled   = module.enabled.value == "1" ? length(var.zone_id) > 0 ? "true" : "false" : "false"
+  source  = "cloudposse/route53-cluster-hostname/aws"
+  version = "0.3.0"
+  name    = module.label.name
+  ttl     = var.dns_ttl
+  zone_id = var.zone_id
+  records = [element(concat(aws_efs_file_system.default.*.dns_name, [""]), 0)]
+  enabled = module.enabled.value == "1" ? length(var.zone_id) > 0 ? "true" : "false" : "false"
 }
 
